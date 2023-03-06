@@ -1,3 +1,8 @@
+/*
+  Shreya Suresh
+  3/5/23
+  Heap- program that allows user to add, display, and remove stuff from a max heap
+ */
 #include <iostream>
 #include <cstring>
 #include <fstream>
@@ -6,7 +11,7 @@
 #include <stdlib.h>
 
 using namespace std;
-
+//function prototypes
 void madd(int* arr, int &curr);
 void fadd(int* arr, int &curr);
 void display(int index, int* arr, int depth, int size);
@@ -18,12 +23,12 @@ int right(int curr);
 int parent(int curr);
 
   
-void fadd(int* arr, int &curr){
+void fadd(int* arr, int &curr) //add using the file{
   cout << "How many numbers are you adding?" << endl;
   int numi;
   cin >> numi;
   for (int i = 0; i < numi; i++){
-    fstream file("numbers.txt");
+    fstream file("numbers.txt"); //import file
     char input[100];
     int count = 0;
     int num = (rand() % 50) + 1;
@@ -38,12 +43,12 @@ void fadd(int* arr, int &curr){
     }
     n = atoi(temp);
     arr[curr] = n;
-    check(arr, curr);
+    check(arr, curr); 
     curr++;
   }
 }
 
-void madd(int* arr, int &curr){
+void madd(int* arr, int &curr){//add number manually
   cout << "What number do you want to add 1-100? " << endl;
   int input;
   cin >> input;
@@ -51,21 +56,22 @@ void madd(int* arr, int &curr){
   check(arr, curr);
   curr++;
 }
-void display(int index, int* arr, int depth, int size){
-  if (right(index) <= size && right(index) != -1){
+void display(int index, int* arr, int depth, int size){ //display the heap like a tree
+  if (right(index) <= size && right(index) != -1){ //print on right
     display(right(index), arr, depth +1, size);
   }
   for (int i = 0; i < depth; i++){
     cout << "\t";
   }
   cout << arr[index-1] << endl;
-  if (left(index) <= size && left(index) != -1){
+  if (left(index) <= size && left(index) != -1){ //print on left
     display(left(index), arr, depth +1, size);
   }
 }
 
-void check(int* arr, int curr){
+void check(int* arr, int curr){ //checking if a child is larger than current parent
   if (curr != 0 && arr[parent(curr)] < arr[curr]){
+    //switch the parent and child
     int temp = arr[parent(curr)];
     arr[parent(curr)] = arr[curr];
     arr[curr] = temp;
@@ -73,7 +79,7 @@ void check(int* arr, int curr){
   }
   return;
 }
-void remove(int* arr, int size){
+void remove(int* arr, int size){ //remove the heap
   while(size != 0){
     cout << arr[0] << " ";
     arr[0] = arr[size-1];
@@ -82,15 +88,15 @@ void remove(int* arr, int size){
     size = size - 1;
   }
 }
-void rcheck(int* arr, int curr){
-  if (arr[right(curr)-1] >= arr[left(curr)-1] && arr[right(curr)-1] > arr[curr-1]){
+void rcheck(int* arr, int curr){ //check if child is larger than parent and switch
+  if (arr[right(curr)-1] >= arr[left(curr)-1] && arr[right(curr)-1] > arr[curr-1]){ //if the right is the greatest
   int temp = arr[curr-1];
   arr[curr-1] = arr[right(curr)-1];
   arr[right(curr)-1] = temp;
   rcheck(arr, right(curr));
   return;
 }
-  if (arr[left(curr)-1] > arr[right(curr)-1] && arr[left(curr)-1] > arr[curr-1]){
+  if (arr[left(curr)-1] > arr[right(curr)-1] && arr[left(curr)-1] > arr[curr-1]){ //if left if greatest
     int temp = arr[curr-1];
     arr[curr-1] = arr[left(curr)-1];
     arr[left(curr)-1] = temp;
@@ -99,13 +105,13 @@ void rcheck(int* arr, int curr){
  }
 }
 
-int left(int curr){
+int left(int curr){ //get left child
   return curr * 2;
 }
-int right(int curr){
+int right(int curr){ //get right child
   return curr * 2 + 1;
 }
-int parent(int curr){
+int parent(int curr){ //get parent
   return (int) floor((curr+1)/2) -1;
 }
 
