@@ -2,11 +2,13 @@
 #include <cstring>
 #include <fstream>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
-void insert(int* arr, int &curr);
-void fadd(int* arr, int curr);
+void madd(int* arr, int &curr);
+void fadd(int* arr, int &curr);
 void display(int index, int* arr, int depth, int size);
 void print(int* arr);
 void remove(int* table, int size);
@@ -18,7 +20,28 @@ int parent(int curr);
 
   
 void fadd(int* arr, int &curr){
-  
+  cout << "How many numbers are you adding?" << endl;
+  int numi;
+  cin >> numi;
+  for (int i = 0; i < numi; i++){
+    fstream file("numbers.txt");
+    char input[100];
+    int count = 0;
+    int num = (rand() % 50) + 1;
+    int n;
+    char temp[100];
+    while(file.getline(input, 100, ' ')){
+      if (count == num){
+	strcpy(temp, input);
+	count++;
+      }
+      count++;
+    }
+    n = atoi(temp);
+    arr[curr] = n;
+    check(arr, curr);
+    curr++;
+  }
 }
 
 void madd(int* arr, int &curr){
@@ -87,7 +110,7 @@ int parent(int curr){
 }
 
 int main(){
-
+  srand(time(0));
   bool stillPlaying = true;
   int* arr = new int[100];
   int curr = 0;
@@ -101,7 +124,7 @@ int main(){
     if (strcmp(input, "MADD") == 0){
       madd(arr, curr);
     } else if (strcmp(input, "FADD") == 0){
-      //fadd(arr, curr);
+      fadd(arr, curr);
     } else if (strcmp(input, "PRINT") == 0){
       print(arr);
     } else if (strcmp(input, "DISPLAY") == 0){
