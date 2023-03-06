@@ -10,7 +10,6 @@ using namespace std;
 void madd(int* arr, int &curr);
 void fadd(int* arr, int &curr);
 void display(int index, int* arr, int depth, int size);
-void print(int* arr);
 void remove(int* table, int size);
 void check(int* arr, int curr);
 void rcheck(int *arr, int curr);
@@ -65,11 +64,6 @@ void display(int index, int* arr, int depth, int size){
   }
 }
 
-void print(int* arr){
-  for (int i = 0; i < 100; i++){
-    cout << arr[i] << endl;
-  }
-}
 void check(int* arr, int curr){
   if (curr != 0 && arr[parent(curr)] < arr[curr]){
     int temp = arr[parent(curr)];
@@ -80,7 +74,13 @@ void check(int* arr, int curr){
   return;
 }
 void remove(int* arr, int size){
-  
+  while(size != 0){
+    cout << arr[0] << " ";
+    arr[0] = arr[size-1];
+    arr[size-1] = -1;
+    rcheck(arr, 1);
+    size = size - 1;
+  }
 }
 void rcheck(int* arr, int curr){
   if (arr[right(curr)-1] >= arr[left(curr)-1] && arr[right(curr)-1] > arr[curr-1]){
@@ -118,15 +118,13 @@ int main(){
     arr[i] = -1;
   }
   while(stillPlaying == true){
-    cout << "Enter FADD(file add), MADD(manually add), PRINT, DISPLAY, REMOVE, or QUIT" << endl;
+    cout << "Enter FADD(file add), MADD(manually add), DISPLAY, REMOVE, or QUIT" << endl;
     char input[10];
     cin >> input;
     if (strcmp(input, "MADD") == 0){
       madd(arr, curr);
     } else if (strcmp(input, "FADD") == 0){
       fadd(arr, curr);
-    } else if (strcmp(input, "PRINT") == 0){
-      print(arr);
     } else if (strcmp(input, "DISPLAY") == 0){
       display(1, arr, 0, curr);
     } else if (strcmp(input, "REMOVE") == 0){
