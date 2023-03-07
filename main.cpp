@@ -23,7 +23,7 @@ int right(int curr);
 int parent(int curr);
 
   
-void fadd(int* arr, int &curr) //add using the file{
+void fadd(int* arr, int &curr) { //add using the file
   cout << "How many numbers are you adding?" << endl;
   int numi;
   cin >> numi;
